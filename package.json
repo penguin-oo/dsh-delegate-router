@@ -1,6 +1,6 @@
 {
   "name": "dsh-delegate-router",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Delegate light subagent tasks to cheaper models: automatic Flash/Pro routing for DeepSeek Harness subagent calls, with /delegate overrides, budget caps, and a routing-ledger panel.",
   "keywords": [
     "dsh",
