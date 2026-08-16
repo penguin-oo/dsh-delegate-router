@@ -11,10 +11,10 @@
       name: 'dsh-subagent-router'
       config:
         mode: auto            # auto | off | flash-all
-        flashProvider: opencode-go
-        flashModel: deepseek-v4-flash
-        proProvider: opencode-go
-        proModel: deepseek-v4-pro
+        flashProvider: ''     # provider id owning flashModel (or env DSH_SUBAGENT_ROUTER_FLASH_PROVIDER)
+        flashModel: ''        # cheap model for light tasks (or env DSH_SUBAGENT_ROUTER_FLASH_MODEL)
+        proProvider: ''       # provider id owning proModel (or env DSH_SUBAGENT_ROUTER_PRO_PROVIDER)
+        proModel: ''          # strong model for heavy tasks (or env DSH_SUBAGENT_ROUTER_PRO_MODEL)
         budgetCapTokens: 0    # 0 = no budget-based downgrade
         lightKeywords:
           - search
