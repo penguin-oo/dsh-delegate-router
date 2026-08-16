@@ -1,4 +1,4 @@
-# dsh-subagent-router bundle patch.
+# dsh-delegate-router bundle patch.
 #
 # Host row for the delegation router: classification rules, budget limits, and
 # the Flash/Pro routes for light/heavy subagent tasks. The package's
@@ -8,13 +8,13 @@
 
 - insert:
     - id: subagent-router
-      name: 'dsh-subagent-router'
+      name: 'dsh-delegate-router'
       config:
         mode: auto            # auto | off | flash-all
-        flashProvider: ''     # provider id owning flashModel (or env DSH_SUBAGENT_ROUTER_FLASH_PROVIDER)
-        flashModel: ''        # cheap model for light tasks (or env DSH_SUBAGENT_ROUTER_FLASH_MODEL)
-        proProvider: ''       # provider id owning proModel (or env DSH_SUBAGENT_ROUTER_PRO_PROVIDER)
-        proModel: ''          # strong model for heavy tasks (or env DSH_SUBAGENT_ROUTER_PRO_MODEL)
+        flashProvider: ''     # provider id owning flashModel (or env dsh_delegate_router_FLASH_PROVIDER)
+        flashModel: ''        # cheap model for light tasks (or env dsh_delegate_router_FLASH_MODEL)
+        proProvider: ''       # provider id owning proModel (or env dsh_delegate_router_PRO_PROVIDER)
+        proModel: ''          # strong model for heavy tasks (or env dsh_delegate_router_PRO_MODEL)
         budgetCapTokens: 0    # 0 = no budget-based downgrade
         lightKeywords:
           - search

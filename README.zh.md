@@ -1,4 +1,4 @@
-# dsh-subagent-router
+# dsh-delegate-router
 
 > [中文](README.zh.md) · [English](README.md)
 
@@ -28,7 +28,7 @@
 ## 安装
 
 ```sh
-dsh plugin --profile web add dsh-subagent-router
+dsh plugin --profile web add dsh-delegate-router
 ```
 
 ## 配置
@@ -37,10 +37,10 @@ Flash/Pro 路由二选一设置：改配置档 patch 的 config，或用环境�
 （两者都未配置时路由器不动作）：
 
 ```sh
-setx DSH_SUBAGENT_ROUTER_FLASH_PROVIDER "<provider>"
-setx DSH_SUBAGENT_ROUTER_FLASH_MODEL   "<flash模型id>"
-setx DSH_SUBAGENT_ROUTER_PRO_PROVIDER  "<provider>"
-setx DSH_SUBAGENT_ROUTER_PRO_MODEL     "<pro模型id>"
+setx dsh_delegate_router_FLASH_PROVIDER "<provider>"
+setx dsh_delegate_router_FLASH_MODEL   "<flash模型id>"
+setx dsh_delegate_router_PRO_PROVIDER  "<provider>"
+setx dsh_delegate_router_PRO_MODEL     "<pro模型id>"
 ```
 
 设置后重启 DSH。模式：`auto`（默认）、`off`、`flash-all`，运行中可用

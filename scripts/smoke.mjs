@@ -1,4 +1,4 @@
-// Smoke test for dsh-subagent-router host module.
+// Smoke test for dsh-delegate-router host module.
 import { readFileSync } from "node:fs";
 
 // The module is a Cordis plugin (apply(ctx, config)); smoke checks load
@@ -6,7 +6,7 @@ import { readFileSync } from "node:fs";
 // shim instead of booting a real DSH.
 import { inject, name } from "../lib/index.js";
 
-if (name !== "dsh-subagent-router") throw new Error(`unexpected plugin name ${name}`);
+if (name !== "dsh-delegate-router") throw new Error(`unexpected plugin name ${name}`);
 const expected = ["tools", "agents", "commands", "storageDomain"];
 if (inject.join(",") !== expected.join(",")) throw new Error(`inject mismatch: ${inject.join(",")}`);
 

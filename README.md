@@ -1,4 +1,4 @@
-# dsh-subagent-router
+# dsh-delegate-router
 
 > [English](README.md) · [中文](README.zh.md)
 
@@ -31,7 +31,7 @@ end-to-end: a "search" delegation ran the child session on
 ## Install
 
 ```sh
-dsh plugin --profile web add dsh-subagent-router
+dsh plugin --profile web add dsh-delegate-router
 ```
 
 ## Configure
@@ -41,10 +41,10 @@ variables (both are optional; the router only acts when the relevant route is
 configured):
 
 ```sh
-setx DSH_SUBAGENT_ROUTER_FLASH_PROVIDER "<provider>"
-setx DSH_SUBAGENT_ROUTER_FLASH_MODEL   "<flash-model-id>"
-setx DSH_SUBAGENT_ROUTER_PRO_PROVIDER  "<provider>"
-setx DSH_SUBAGENT_ROUTER_PRO_MODEL     "<pro-model-id>"
+setx dsh_delegate_router_FLASH_PROVIDER "<provider>"
+setx dsh_delegate_router_FLASH_MODEL   "<flash-model-id>"
+setx dsh_delegate_router_PRO_PROVIDER  "<provider>"
+setx dsh_delegate_router_PRO_MODEL     "<pro-model-id>"
 ```
 
 Restart DSH afterwards. Modes: `auto` (default), `off`, `flash-all`; switch at

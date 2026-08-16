@@ -1,5 +1,5 @@
 {
-  "name": "dsh-subagent-router",
+  "name": "dsh-delegate-router",
   "version": "0.1.0",
   "description": "Delegate light subagent tasks to cheaper models: automatic Flash/Pro routing for DeepSeek Harness subagent calls, with /delegate overrides and budget caps.",
   "keywords": [
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/penguin-oo/dsh-subagent-router.git"
+    "url": "git+https://github.com/penguin-oo/dsh-delegate-router.git"
   },
   "type": "module",
   "main": "lib/index.js",
