@@ -1,0 +1,33 @@
+# dsh-subagent-router bundle patch.
+#
+# Host row for the delegation router: classification rules, budget limits, and
+# the Flash/Pro routes for light/heavy subagent tasks. The package's
+# dsh.client declaration adds the browser half (settings card + savings panel).
+#
+# A patch replaces the targeted row's whole `config`, so restate every key.
+
+- insert:
+    - id: subagent-router
+      name: 'dsh-subagent-router'
+      config:
+        mode: auto            # auto | off | flash-all
+        flashProvider: opencode-go
+        flashModel: deepseek-v4-flash
+        proProvider: opencode-go
+        proModel: deepseek-v4-pro
+        budgetCapTokens: 0    # 0 = no budget-based downgrade
+        lightKeywords:
+          - search
+          - 搜索
+          - 查找
+          - 总结
+          - summarize
+          - list
+          - 列出
+        heavyKeywords:
+          - refactor
+          - 重构
+          - implement
+          - 实现
+          - debug
+          - 调试

@@ -1,0 +1,53 @@
+{
+  "name": "dsh-subagent-router",
+  "version": "0.1.0",
+  "description": "Delegate light subagent tasks to cheaper models: automatic Flash/Pro routing for DeepSeek Harness subagent calls, with /delegate overrides and budget caps.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "subagent",
+    "router",
+    "model",
+    "cost",
+    "flash"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/penguin-oo/dsh-subagent-router.git"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-storage-domain": "^0.1.0-rc.6"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12",
+    "fzstd": "^0.1.1",
+    "puppeteer-core": "^25.7.0"
+  },
+  "scripts": {
+    "smoke": "node scripts/smoke.mjs"
+  }
+}

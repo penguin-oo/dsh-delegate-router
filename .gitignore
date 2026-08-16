@@ -1,0 +1,5 @@
+node_modules/
+.github/
+scripts/ld-*.mjs
+scripts/e2e-*.png
+*.log
