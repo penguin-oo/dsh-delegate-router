@@ -26,6 +26,9 @@
     "./client": {
       "default": "./lib/client.js"
     },
+    "./stats": {
+      "default": "./lib/stats-service.js"
+    },
     "./typert": {
       "default": "./lib/typert.host.js"
     },

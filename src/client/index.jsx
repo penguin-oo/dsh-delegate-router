@@ -77,7 +77,9 @@ function LedgerHost({ ctx, onClose }) {
   }, [ctx]);
   useEffect(() => {
     void refresh();
-  }, [refresh]);
+    // Re-fetch when the active session changes while the panel is open.
+    return ctx.sessions.list.subscribe(() => void refresh());
+  }, [refresh, ctx]);
   return <LedgerPanel decisions={decisions} onClose={onClose} />;
 }
 

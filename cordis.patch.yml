@@ -1,8 +1,13 @@
 # dsh-delegate-router bundle patch.
 #
-# Host row for the delegation router: classification rules, budget limits, and
-# the Flash/Pro routes for light/heavy subagent tasks. The package's
-# dsh.client declaration adds the browser half (settings card + savings panel).
+# Host rows:
+#   - the delegation router: classification rules, budget limits, and the
+#     Flash/Pro routes for light/heavy subagent tasks;
+#   - the stats sidecar mounted as its own top-level row (the API gateway
+#     resolves Remote receivers on the host plane, so the service must be a
+#     host-plane row like the core message-feedback service, not a nested
+#     ctx.plugin child).
+# The package's dsh.client declaration adds the browser half (ledger panel).
 #
 # A patch replaces the targeted row's whole `config`, so restate every key.
 
@@ -11,10 +16,10 @@
       name: 'dsh-delegate-router'
       config:
         mode: auto            # auto | off | flash-all
-        flashProvider: ''     # provider id owning flashModel (or env dsh_delegate_router_FLASH_PROVIDER)
-        flashModel: ''        # cheap model for light tasks (or env dsh_delegate_router_FLASH_MODEL)
-        proProvider: ''       # provider id owning proModel (or env dsh_delegate_router_PRO_PROVIDER)
-        proModel: ''          # strong model for heavy tasks (or env dsh_delegate_router_PRO_MODEL)
+        flashProvider: ''     # provider id owning flashModel (or env DSH_DELEGATE_ROUTER_FLASH_PROVIDER)
+        flashModel: ''        # cheap model for light tasks (or env DSH_DELEGATE_ROUTER_FLASH_MODEL)
+        proProvider: ''       # provider id owning proModel (or env DSH_DELEGATE_ROUTER_PRO_PROVIDER)
+        proModel: ''          # strong model for heavy tasks (or env DSH_DELEGATE_ROUTER_PRO_MODEL)
         budgetCapTokens: 0    # 0 = no budget-based downgrade
         lightKeywords:
           - search
@@ -31,3 +36,7 @@
           - 实现
           - debug
           - 调试
+
+    - id: delegate-router-stats
+      name: 'dsh-delegate-router/stats'
+

@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import puppeteer from "puppeteer-core";
 
-const DSH_URL = "http://127.0.0.1:3741";
+const DSH_URL = "http://127.0.0.1:3742";
 const EDGE = "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
 const CDP_PORT = 9347;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
