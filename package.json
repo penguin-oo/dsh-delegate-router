@@ -45,6 +45,8 @@
     "lib/typert.remote-client.js",
     "lib/client.js",
     "cordis.patch.yml",
+    "scripts/test-routing.mjs",
+    "scripts/measure-savings.mjs",
     "README.md",
     "README.zh.md"
   ],

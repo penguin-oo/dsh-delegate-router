@@ -21,6 +21,11 @@
         proProvider: ''       # provider id owning proModel (or env DSH_DELEGATE_ROUTER_PRO_PROVIDER)
         proModel: ''          # strong model for heavy tasks (or env DSH_DELEGATE_ROUTER_PRO_MODEL)
         budgetCapTokens: 0    # 0 = no budget-based downgrade
+        shortTaskMaxChars: 0  # >0: keyword-free tasks this short (description+prompt) go Flash
+        peakDemoteUnknown: false # true: during Beijing peak hours (9-12, 14-18) unmatched tasks demote to Flash
+        peakHours:            # DeepSeek peak-pricing windows (Beijing time); off-peak is half price
+          - [9, 12]
+          - [14, 18]
         lightKeywords:
           - search
           - 搜索

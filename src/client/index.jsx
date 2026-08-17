@@ -9,6 +9,8 @@ const inject = ["slots", "remote", "sessions", "locale"];
 const TRIGGER_LABEL = {
   "auto-light": "轻任务→Flash",
   "auto-heavy": "重任务→Pro",
+  "auto-short": "短任务→Flash",
+  peak: "峰时降级→Flash",
   "flash-all": "全量Flash",
   budget: "预算降级",
   manual: "手动指定",
