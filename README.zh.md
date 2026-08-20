@@ -32,14 +32,31 @@ DeepSeek V4 Flash 每一档价格都**恰好是 V4 Pro 的三分之一**（2026-
 1. 调用显式指定 `provider`/`model` → 直接用（`manual`）
 2. `/delegate off` → 继承；`/delegate flash-all` → 全走 Flash
 3. 会话累计 token 超过 `budgetCapTokens` → Flash（`budget`）
-4. 任务文本命中 `heavyKeywords` → Pro（`auto-heavy`）
-5. 任务文本命中 `lightKeywords` → Flash（`auto-light`）
-6. 任务文本长度 ≤ `shortTaskMaxChars` → Flash（`auto-short`）
-7. 未命中任何规则 + 北京时间高峰段（默认 9–12、14–18）→ Flash（`peak`）
+4. 关键词**权重计分**：重词打平获胜，但「明显偏轻」的任务能压过个别意外重词
+5. 任务文本长度 ≤ `shortTaskMaxChars` → Flash（`auto-short`）
+6. 未命中任何规则 + 北京时间高峰段（默认 9–12、14–18）→ Flash（`peak`）
+7. 未命中 + `unknownToFlash: true`（可选项、激进）→ Flash（`auto-unknown`）
 8. 其余 → 继承父模型
 
-任务文本 = 子代理调用的 `description` + `prompt`，大小写不敏感子串匹配；
-重词优先于轻词。
+任务文本 = 子代理调用的 `description` + `prompt`。匹配是精确的：纯英文字母
+关键词按**词边界**匹配（`list` 永远不会误中 `specialist`、`design` 不会误中
+`designer`）；少于两个字符的中文关键词会被忽略。
+
+## 与 dsh-routing-suite 是绝配
+
+[dsh-routing-suite](https://github.com/yjh051108/dsh-routing-suite) 负责
+**思维模式/人格层**；本插件负责**子代理模型成本层**。两者叠加：轻任务子代理
+被本插件送到 Flash，然后在路由预设的 flash 专属人格下运行。routing-suite
+自己的实验（P11/P24）证明最优 weak 人格是 **flash 专属**的、且 spec 式人格在
+Flash 上反而有害——所以「Flash + 该路由预设」是廉价派发的最佳组合，而本插件
+就是为它提供自动 Flash 分流的那个齿轮。
+
+## 诚实的测量口径
+
+相对价格由官方价目表保证（每档 Flash = Pro 的 1/3，2026-08-17 峰谷定价）。
+绝对金额取决于一次运行干了多少活——LLM 运行不确定，所以请比较**单价**
+（或同任务），不要比原始总额。`scripts/measure-savings.mjs` 用官方价格表对
+你的真实会话日志计价，引用数字前先读它的口径。
 
 ## 安装
 
@@ -62,13 +79,15 @@ dsh plugin --profile web add dsh-delegate-router
   "heavyKeywords": ["refactor", "重构", "implement", "实现", "debug", "调试"],
   "shortTaskMaxChars": 120,
   "peakDemoteUnknown": true,
+  "unknownToFlash": false,
   "peakHours": [[9, 12], [14, 18]],
   "budgetCapTokens": 0
 }
 ```
 
 - `shortTaskMaxChars: 0` 关闭短任务规则；`peakDemoteUnknown: false` 关闭
-  峰谷降级；`budgetCapTokens: 0` 关闭预算上限。
+  峰谷降级；`unknownToFlash: true` 把一切未命中任务送去 Flash（激进，默认
+  保持 `false`）；`budgetCapTokens: 0` 关闭预算上限。
 - 模型路由也可用环境变量 `DSH_DELEGATE_ROUTER_FLASH_PROVIDER` /
   `DSH_DELEGATE_ROUTER_FLASH_MODEL` / `DSH_DELEGATE_ROUTER_PRO_PROVIDER` /
   `DSH_DELEGATE_ROUTER_PRO_MODEL` 提供。

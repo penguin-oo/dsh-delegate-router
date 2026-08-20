@@ -30,8 +30,20 @@ const check = (label, got, want) => {
 // Keywords
 check("light keyword", decideRoute({ text: "搜索 deepseek 定价", config: base }), { route: FLASH, trigger: "auto-light" });
 check("heavy keyword", decideRoute({ text: "refactor the router", config: base }), { route: PRO, trigger: "auto-heavy" });
-check("heavy beats light", decideRoute({ text: "重构这个搜索模块", config: base }), { route: PRO, trigger: "auto-heavy" });
+check("heavy wins ties", decideRoute({ text: "重构这个搜索模块", config: base }), { route: PRO, trigger: "auto-heavy" });
 check("no match inherits", decideRoute({ text: "帮我检查一下这个 bug", config: base }), undefined);
+
+// Dominance scoring: strictly-light task beats one incidental heavy word.
+check("light beats incidental heavy", decideRoute({ text: "搜索并总结这个重构方案的要点", config: base }), { route: FLASH, trigger: "auto-light" });
+check("heavy still wins when equal", decideRoute({ text: "重构并搜索", config: base }), { route: PRO, trigger: "auto-heavy" });
+
+// Word-boundary precision (English)
+check("specialist is not list", decideRoute({ text: "review the specialist article", config: { ...base, lightKeywords: ["list"], heavyKeywords: [] } }), undefined);
+check("list word matches", decideRoute({ text: "list the files", config: { ...base, lightKeywords: ["list"], heavyKeywords: [] } }), { route: FLASH, trigger: "auto-light" });
+check("designer is not design", decideRoute({ text: "the designer made it", config: { ...base, lightKeywords: [], heavyKeywords: ["design"] } }), undefined);
+
+// CJK precision: single-char keywords are dropped.
+check("single-char CJK keyword ignored", decideRoute({ text: "银行开户", config: { ...base, lightKeywords: ["行"], heavyKeywords: [] } }), undefined);
 
 // Short-task heuristic
 check("short task at any hour", decideRoute({ text: "git status", config: { ...base, shortTaskMaxChars: 80 } }), { route: FLASH, trigger: "auto-short" });
@@ -44,6 +56,10 @@ check("unknown at off-peak 22:00 inherits", decideRoute({ text: "帮我检查一
 check("peak boundary 12:00 is off-peak", decideRoute({ text: "帮我检查一下这个 bug", config: { ...base, peakDemoteUnknown: true }, now: at(12) }), undefined);
 check("peak off unless enabled", decideRoute({ text: "帮我检查一下这个 bug", config: base, now: at(10) }), undefined);
 check("light still light at peak", decideRoute({ text: "搜索定价", config: { ...base, peakDemoteUnknown: true }, now: at(10) }), { route: FLASH, trigger: "auto-light" });
+
+// Opt-in unknown-to-flash
+check("unknownToFlash routes unmatched", decideRoute({ text: "帮我检查一下这个 bug", config: { ...base, unknownToFlash: true } }), { route: FLASH, trigger: "auto-unknown" });
+check("unknownToFlash off inherits", decideRoute({ text: "帮我检查一下这个 bug", config: base }), undefined);
 
 // Mode gates
 check("off disables", decideRoute({ text: "搜索定价", config: { ...base, mode: "off" } }), undefined);

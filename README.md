@@ -36,14 +36,36 @@ your own `~/.dsh/sessions` to reproduce.
 1. explicit per-call `provider`/`model` → used as-is (`manual`)
 2. `/delegate off` → inherit; `/delegate flash-all` → all Flash
 3. session tokens over `budgetCapTokens` → Flash (`budget`)
-4. task text hits `heavyKeywords` → Pro (`auto-heavy`)
-5. task text hits `lightKeywords` → Flash (`auto-light`)
-6. task text ≤ `shortTaskMaxChars` → Flash (`auto-short`)
-7. unmatched + Beijing peak hours (default 9–12, 14–18) → Flash (`peak`)
+4. keyword **dominance scoring**: heavy wins ties, but a strictly-light task
+   beats one incidental heavy word (`auto-heavy` / `auto-light`)
+5. task text ≤ `shortTaskMaxChars` → Flash (`auto-short`)
+6. unmatched + Beijing peak hours (default 9–12, 14–18) → Flash (`peak`)
+7. unmatched + `unknownToFlash: true` (opt-in, aggressive) → Flash (`auto-unknown`)
 8. otherwise → inherit the parent model
 
-Task text = the subagent call's `description` + `prompt`, matched
-case-insensitively as substrings. Heavy beats light.
+Task text = the subagent call's `description` + `prompt`. Matching is precise:
+pure-ASCII keywords use word boundaries (`list` never matches `specialist`,
+`design` never matches `designer`); CJK keywords shorter than two characters
+are ignored.
+
+## Works great with dsh-routing-suite
+
+[dsh-routing-suite](https://github.com/yjh051108/dsh-routing-suite) owns the
+**thinking-mode / persona layer**; this plugin owns the **child-model cost
+layer**. They stack: light subagent tasks get routed to Flash by this plugin,
+then run under the router preset's flash-optimized persona. The routing suite's
+own experiments (P11/P24) found the optimal *weak* persona is **flash-specific**
+and that spec-style personas actively hurt Flash — so Flash + that router
+preset is the best-matched combination for cheap delegation, and this plugin
+supplies the automatic Flash routing for it.
+
+## Honest measurement
+
+Relative prices are guaranteed by the official price table (Flash = 1/3 of Pro
+on every line, 2026-08-17 peak/off-peak pricing). Absolute numbers depend on
+how much work a run does — LLM runs are nondeterministic, so compare **per
+token** (or same-task), never raw totals. `scripts/measure-savings.mjs` prices
+your real session logs with the official table; read it before quoting numbers.
 
 ## Install
 
@@ -66,13 +88,16 @@ All knobs are optional and live in `~/.dsh/dsh-delegate-router.json`:
   "heavyKeywords": ["refactor", "重构", "implement", "实现", "debug", "调试"],
   "shortTaskMaxChars": 120,
   "peakDemoteUnknown": true,
+  "unknownToFlash": false,
   "peakHours": [[9, 12], [14, 18]],
   "budgetCapTokens": 0
 }
 ```
 
 - `shortTaskMaxChars: 0` disables the short-task rule; `peakDemoteUnknown:
-  false` disables peak-hour demotion; `budgetCapTokens: 0` disables the cap.
+  false` disables peak-hour demotion; `unknownToFlash: true` sends ANY
+  unmatched task to Flash (aggressive — leave `false` unless you are sure);
+  `budgetCapTokens: 0` disables the cap.
 - Providers can also come from `DSH_DELEGATE_ROUTER_FLASH_PROVIDER` /
   `DSH_DELEGATE_ROUTER_FLASH_MODEL` / `DSH_DELEGATE_ROUTER_PRO_PROVIDER` /
   `DSH_DELEGATE_ROUTER_PRO_MODEL` env vars.

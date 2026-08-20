@@ -23,6 +23,7 @@
         budgetCapTokens: 0    # 0 = no budget-based downgrade
         shortTaskMaxChars: 0  # >0: keyword-free tasks this short (description+prompt) go Flash
         peakDemoteUnknown: false # true: during Beijing peak hours (9-12, 14-18) unmatched tasks demote to Flash
+        unknownToFlash: false # true: ANY unmatched task goes Flash (aggressive — default off)
         peakHours:            # DeepSeek peak-pricing windows (Beijing time); off-peak is half price
           - [9, 12]
           - [14, 18]
