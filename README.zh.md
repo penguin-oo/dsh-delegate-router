@@ -14,7 +14,7 @@
   关键词表、短任务阈值、预算上限、北京时间峰谷降级
 - **手动覆盖** — `subagent`/`subagent_fork` 工具新增 per-call
   `provider`/`model` 参数，任何一次调用都可强制指定模型
-- **`/delegate` 命令** — 会话级模式切换：`/delegate auto | off | flash-all`
+- **`/delegate` 命令** — 会话级模式切换：`/delegate auto | off | flash-all`，`/delegate status` 查看生效路由
 - **决策账本** — ⚡ 分派记录面板列出当前会话每一次分派（任务、目标模型、
   触发原因）
 
@@ -71,7 +71,7 @@ dsh plugin --profile web add dsh-delegate-router
 ```json
 {
   "flashProvider": "opencode-go",
-  "flashModel": "deepseek-v4-flash",
+  "flashModel": "deepseek-v4.1-flash",
   "proProvider": "opencode-go",
   "proModel": "deepseek-v4-pro",
   "mode": "auto",
@@ -91,7 +91,9 @@ dsh plugin --profile web add dsh-delegate-router
 - 模型路由也可用环境变量 `DSH_DELEGATE_ROUTER_FLASH_PROVIDER` /
   `DSH_DELEGATE_ROUTER_FLASH_MODEL` / `DSH_DELEGATE_ROUTER_PRO_PROVIDER` /
   `DSH_DELEGATE_ROUTER_PRO_MODEL` 提供。
-- 改完文件需重启 DSH；运行中可用 `/delegate <mode>` 切模式。
+- 配置文件**改完即时生效**（下次派发即按新路由，无需重启 DSH）；运行中可用
+  `/delegate auto | off | flash-all` 切模式，`/delegate status` 查看当前会话
+  生效的 flash/pro 路由与判据开关。
 
 ## 开发
 

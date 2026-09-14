@@ -17,7 +17,7 @@ Every decision is recorded in a ledger you can inspect from the sidebar
   peak-hour demotion.
 - **Manual overrides** — per-call `provider`/`model` parameters on the
   `subagent` / `subagent_fork` tools.
-- **`/delegate` command** — per-session mode: `/delegate auto | off | flash-all`.
+- **`/delegate` command** — per-session mode: `/delegate auto | off | flash-all`, plus `/delegate status` to print the routes in force.
 - **Decision ledger** — the ⚡ 分派记录 panel lists every routed delegation
   (task, route, trigger) for the active session.
 
@@ -80,7 +80,7 @@ All knobs are optional and live in `~/.dsh/dsh-delegate-router.json`:
 ```json
 {
   "flashProvider": "opencode-go",
-  "flashModel": "deepseek-v4-flash",
+  "flashModel": "deepseek-v4.1-flash",
   "proProvider": "opencode-go",
   "proModel": "deepseek-v4-pro",
   "mode": "auto",
@@ -101,8 +101,9 @@ All knobs are optional and live in `~/.dsh/dsh-delegate-router.json`:
 - Providers can also come from `DSH_DELEGATE_ROUTER_FLASH_PROVIDER` /
   `DSH_DELEGATE_ROUTER_FLASH_MODEL` / `DSH_DELEGATE_ROUTER_PRO_PROVIDER` /
   `DSH_DELEGATE_ROUTER_PRO_MODEL` env vars.
-- Restart DSH after editing the file. Switch mode at runtime with
-  `/delegate <mode>`.
+- Config edits apply to the **next delegation** — no DSH restart needed. Switch
+  mode at runtime with `/delegate auto | off | flash-all`, and print the routes
+  in force with `/delegate status`.
 
 ## Development
 
