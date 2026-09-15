@@ -90,10 +90,12 @@ dsh plugin --profile web add dsh-delegate-router
   保持 `false`）；`budgetCapTokens: 0` 关闭预算上限。
 - 模型路由也可用环境变量 `DSH_DELEGATE_ROUTER_FLASH_PROVIDER` /
   `DSH_DELEGATE_ROUTER_FLASH_MODEL` / `DSH_DELEGATE_ROUTER_PRO_PROVIDER` /
-  `DSH_DELEGATE_ROUTER_PRO_MODEL` 提供。
+  `DSH_DELEGATE_ROUTER_PRO_MODEL` 提供。**优先级：patch 配置 > 环境变量 >
+  配置文件**——环境变量设过就会一直盖住配置文件；`/delegate status` 会标出
+  每个值实际来自哪一层（`[patch]` / `[env]` / `[file]`），排查时先看它。
 - 配置文件**改完即时生效**（下次派发即按新路由，无需重启 DSH）；运行中可用
   `/delegate auto | off | flash-all` 切模式，`/delegate status` 查看当前会话
-  生效的 flash/pro 路由与判据开关。
+  生效的 flash/pro 路由、来源与判据开关。
 
 ## 开发
 
